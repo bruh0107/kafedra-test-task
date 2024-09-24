@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+.container{
+    max-width: 1660px;
+    margin: 0 auto;
+}
+
+body{
+    background: #FFFCF4;
+    letter-spacing: -1px;
+    color: #3D2B2D;
+    font-family: 'Comfortaa', sans-serif;
+}
