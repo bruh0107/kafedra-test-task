@@ -23,12 +23,13 @@ onMounted(() => {
         :description="product.description"
         :price="+product.price"
     />
-    <h1 v-if="!products">Загрузка...</h1>
+    <h1 v-if="!products" class="loading">Загрузка...</h1>
   </section>
 </template>
 
 <style scoped lang="scss">
-.product-card{
-
+.loading{
+  text-align: center;
+  font-size: 48px;
 }
 </style>
