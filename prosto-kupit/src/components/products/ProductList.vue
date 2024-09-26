@@ -7,20 +7,23 @@ const products = ref()
 onMounted(() => {
   axios
       .get(
-          'https://fakestoreapi.com/products'
+          'http://lifestealer86.ru/api-shop/products'
       )
-      .then((response) => products.value = response.data)
+      .then((data) => products.value = data.data.data)
 
 })
 </script>
+
 <template>
-  <section class="product-card">
+  <h1 class="title container">Каталог товаров</h1>
+  <section class="product-card container">
     <product-cards
         v-for="product in products"
         :key="product.id"
         :id="product.id"
-        :title="product.title"
+        :name="product.name"
         :description="product.description"
+        :image="product.image"
         :price="+product.price"
     />
     <h1 v-if="!products" class="loading">Загрузка...</h1>
@@ -28,8 +31,19 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.title{
+  font-weight: 400;
+  font-size: 48px;
+  padding: 48px 0;
+}
 .loading{
   text-align: center;
   font-size: 48px;
+  margin-top: 50px;
+}
+.product-card{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 </style>

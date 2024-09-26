@@ -4,8 +4,8 @@
 
 <template>
   <nav class="navigation">
-    <a class="navigation-link" href="#">Зарегистрироваться</a>
-    <a class="navigation-link" href="#">Войти</a>
+    <router-link class="navigation-link" to="/signup">Зарегистрироваться</router-link>
+    <router-link class="navigation-link" to="/signin">Войти</router-link>
   </nav>
 </template>
 

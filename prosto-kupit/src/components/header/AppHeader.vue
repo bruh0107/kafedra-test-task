@@ -16,6 +16,7 @@ import { HeaderNavigation } from "@/components/index.js";
   background: #F5EDD8;
   position: sticky;
   top: 0;
+  z-index: 10;
 
   &__inner{
     display: flex;

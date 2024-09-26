@@ -1,18 +1,23 @@
 <script setup>
 import { useRouter } from "vue-router";
+import {computed, ref} from "vue";
 
 const props = defineProps({
   id: {
     type: Number,
     required: true
   },
-  title: {
+  name: {
     type: String,
     required: true
   },
   description: {
     type: String,
     default: "Не задано"
+  },
+  image: {
+    type: String,
+    default: ''
   },
   price: {
     type: Number
@@ -25,16 +30,17 @@ const props = defineProps({
 
 const router = useRouter()
 
+const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
 
 </script>
 
 <template>
-  <article class="product-card container">
+  <article class="product-card container" :style="{ backgroundImage: `url(${imageFullPath})` }">
     <div class="product-card-inner">
-      <p class="product-card-title">{{ title }}</p>
+      <p class="product-card-title">{{ name }}</p>
       <p class="product-card-body">{{ description }}</p>
       <div class="product-card-info">
-        <span class="product-card-price">{{ price }}</span>
+        <span class="product-card-price">{{ price }} р.</span>
         <button class="product-card-btn">В корзину</button>
       </div>
     </div>
@@ -49,11 +55,14 @@ const router = useRouter()
   flex-wrap: wrap;
   align-items: end;
   border-radius: 10px;
+  background-position: 50% 50%;
+  background-size: cover;
 
   &-inner{
-    background: #E9D6AA;
+    background: rgba(233, 214, 170, 0.8);
     width: 400px;
     border-radius: 10px;
+    backdrop-filter: blur(3px);
   }
 
   &-title, &-body{
