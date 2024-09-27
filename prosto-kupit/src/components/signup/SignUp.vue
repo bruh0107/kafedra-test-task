@@ -31,6 +31,8 @@ const [ password, passwordAttrs ] = defineField('password')
 const submit = handleSubmit((values) => {
   console.log(values)
 })
+
+
 </script>
 
 <template>
@@ -63,7 +65,7 @@ const submit = handleSubmit((values) => {
   border-radius: 20px;
   padding: 90px 90px 0 90px;
 
-  &-email, &-pass {
+  &-email, &-pass, &-fio {
     border: none;
     background: #FFFCF4;
     width: 680px;
