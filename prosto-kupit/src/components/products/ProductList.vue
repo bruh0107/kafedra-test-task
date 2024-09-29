@@ -1,5 +1,5 @@
 <script setup>
-import { ProductCards } from "@/components/index.js";
+import { ProductCard } from "@/components/index.js";
 import {onMounted, ref} from "vue";
 import axios from "axios"
 
@@ -9,17 +9,14 @@ onMounted(() => {
       .get(
           'http://lifestealer86.ru/api-shop/products'
       )
-      .then((data) => {
-        products.value = data.data.data
-        console.log(data)
-      })
+      .then((data) => products.value = data.data.data)
 })
 </script>
 
 <template>
   <h1 class="title container">Каталог товаров</h1>
   <section class="product-card container">
-    <product-cards
+    <product-card
         v-for="product in products"
         :key="product.id"
         :id="product.id"

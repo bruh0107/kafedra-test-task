@@ -2,8 +2,10 @@
 import { useForm } from "vee-validate";
 import * as yup from 'yup'
 import {useAuthStore} from "@/stores/auth-store.js";
+import {storeToRefs} from "pinia";
 
 const { register } = useAuthStore()
+const { errorStatus } = storeToRefs(useAuthStore())
 
 const yupValidationSchema = yup.object({
   fio: yup
@@ -49,6 +51,8 @@ const submit = handleSubmit((values) => {
     <p v-if="errors.password">{{ errors.password }}</p>
     <br>
     <button class="register-btn" :disabled="errors.email || errors.password">Зарегистрироваться</button>
+    <br>
+    <p v-if="errorStatus">Пользователь с такими данными уже существует</p>
   </form>
 </template>
 
@@ -87,6 +91,14 @@ const submit = handleSubmit((values) => {
     border-radius: 10px;
     color: #3D2B2D;
     cursor: pointer;
+  }
+  &-btn:hover{
+    color: #554143;
+    background: #fffef9;
+  }
+  &-btn:active{
+    color: #554143;
+    background: #ffffff;
   }
 }
 </style>

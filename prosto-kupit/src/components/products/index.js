@@ -1,4 +1,4 @@
-import ProductCards from "./ProductCards.vue";
+import ProductCard from "./ProductCard.vue";
 import ProductList from "./ProductList.vue";
 
-export { ProductCards, ProductList }
+export { ProductCard, ProductList }

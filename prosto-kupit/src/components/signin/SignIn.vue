@@ -2,8 +2,10 @@
 import { useForm } from "vee-validate";
 import * as yup from 'yup'
 import {useAuthStore} from "@/stores/auth-store.js";
+import {storeToRefs} from "pinia";
 
 const { login } = useAuthStore()
+const { errorStatus } = storeToRefs(useAuthStore())
 
 const yupValidationSchema = yup.object({
   email: yup
@@ -30,7 +32,7 @@ const submit = handleSubmit((values) => {
 
 <template>
   <p class="register-text">Вход</p>
-  <form class="register container" method="post" @submit.prevent="submit">
+  <form class="register container" @submit.prevent="submit">
     <input type="email" placeholder="email" class="register-email" v-model="email" v-bind="emailAttrs" required>
     <span v-if="errors.email">{{ errors.email }}</span>
     <br>
@@ -38,6 +40,8 @@ const submit = handleSubmit((values) => {
     <p v-if="errors.password">{{ errors.password }}</p>
     <br>
     <button class="register-btn" :disabled="errors.email || errors.password">Войти</button>
+    <br>
+    <p v-if="errorStatus">Неверный логин или пароль</p>
   </form>
 </template>
 
@@ -76,6 +80,15 @@ const submit = handleSubmit((values) => {
     border-radius: 10px;
     color: #3D2B2D;
     cursor: pointer;
+  }
+
+  &-btn:hover{
+    color: #554143;
+    background: #fffef9;
+  }
+  &-btn:active{
+    color: #554143;
+    background: #ffffff;
   }
 }
 </style>

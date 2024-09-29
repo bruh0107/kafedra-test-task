@@ -1,6 +1,9 @@
 <script setup>
 import { useRouter } from "vue-router";
 import {computed, ref} from "vue";
+import {storeToRefs} from "pinia";
+import {useAuthStore} from "@/stores/auth-store.js";
+const { isAuth } = storeToRefs(useAuthStore())
 
 const props = defineProps({
   id: {
@@ -41,7 +44,7 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
       <p class="product-card-body">{{ description }}</p>
       <div class="product-card-info">
         <span class="product-card-price">{{ price }} р.</span>
-        <button class="product-card-btn">В корзину</button>
+        <button class="product-card-btn" v-if="isAuth">В корзину</button>
       </div>
     </div>
   </article>
@@ -92,9 +95,21 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
     border: none;
     padding: 7px 33px;
     background: #F5EDD8;
+    color: #3D2B2D;
     font-family: 'Comfortaa', sans-serif;
     border-radius: 5px;
+    transition: 0.3s;
   }
+
+  &-btn:hover{
+    color: #554143;
+    background: #f4efe0;
+  }
+  &-btn:active{
+    color: #685a5b;
+    background: #f8f6f0;
+  }
+
   &-price{
     font-size: 24px;
   }
