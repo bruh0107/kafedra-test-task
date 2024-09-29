@@ -5,7 +5,7 @@ import { HeaderNavigation } from "@/components/index.js";
 <template>
   <header class="header">
     <div class="header__inner container">
-      <img src="@/assets/img/logo.svg" alt="logo" class="header__logo">
+      <router-link to="/"><img src="@/assets/img/logo.svg" alt="logo" class="header__logo"></router-link>
       <header-navigation />
     </div>
   </header>

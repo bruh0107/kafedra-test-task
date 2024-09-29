@@ -1,8 +1,14 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from 'yup'
+import {useAuthStore} from "@/stores/auth-store.js";
+
+const { register } = useAuthStore()
 
 const yupValidationSchema = yup.object({
+  fio: yup
+      .string()
+      .required('Поле является обязательным'),
   email: yup
       .string()
       .email('Некорректная почта')
@@ -10,12 +16,7 @@ const yupValidationSchema = yup.object({
   password: yup
       .string()
       .min(6)
-      .max(20),
-  password1: yup
-      .string()
-      .min(6)
       .max(20)
-      .oneOf([yup.ref('password')], 'Пароль не совпадает')
 })
 
 const {
@@ -25,11 +26,12 @@ const {
 } = useForm({
   validationSchema: yupValidationSchema
 })
+const [ fio, fioAttrs ] = defineField('fio')
 const [ email, emailAttrs ] = defineField('email')
 const [ password, passwordAttrs ] = defineField('password')
 
 const submit = handleSubmit((values) => {
-  console.log(values)
+  register(values.fio, values.email, values.password)
 })
 
 
@@ -39,7 +41,7 @@ const submit = handleSubmit((values) => {
 <template>
   <p class="register-text">Регистрация</p>
   <form class="register container" method="post" @submit.prevent="submit">
-    <input type="text" placeholder="Иванов Иван Иванович" class="register-fio" required>
+    <input type="text" placeholder="Иванов Иван Иванович" class="register-fio" v-model="fio" v-bind="fioAttrs" required>
     <input type="email" placeholder="email" class="register-email" v-model="email" v-bind="emailAttrs" required>
     <p v-if="errors.email">{{ errors.email }}</p>
     <br>
@@ -84,6 +86,7 @@ const submit = handleSubmit((values) => {
     background: #FFFCF4;
     border-radius: 10px;
     color: #3D2B2D;
+    cursor: pointer;
   }
 }
 </style>

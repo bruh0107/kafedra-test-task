@@ -1,6 +1,9 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from 'yup'
+import {useAuthStore} from "@/stores/auth-store.js";
+
+const { login } = useAuthStore()
 
 const yupValidationSchema = yup.object({
   email: yup
@@ -21,7 +24,7 @@ const [ email, emailAttrs ] = defineField('email')
 const [ password, passwordAttrs ] = defineField('password')
 
 const submit = handleSubmit((values) => {
-  console.log(values)
+  login(values.email, values.password)
 })
 </script>
 
@@ -72,6 +75,7 @@ const submit = handleSubmit((values) => {
     background: #FFFCF4;
     border-radius: 10px;
     color: #3D2B2D;
+    cursor: pointer;
   }
 }
 </style>

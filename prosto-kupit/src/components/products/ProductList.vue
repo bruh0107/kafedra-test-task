@@ -9,8 +9,10 @@ onMounted(() => {
       .get(
           'http://lifestealer86.ru/api-shop/products'
       )
-      .then((data) => products.value = data.data.data)
-
+      .then((data) => {
+        products.value = data.data.data
+        console.log(data)
+      })
 })
 </script>
 
