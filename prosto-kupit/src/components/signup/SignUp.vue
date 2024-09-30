@@ -3,9 +3,10 @@ import { useForm } from "vee-validate";
 import * as yup from 'yup'
 import {useAuthStore} from "@/stores/auth-store.js";
 import {storeToRefs} from "pinia";
+import {useRouter} from "vue-router";
 
 const { register } = useAuthStore()
-const { errorStatus } = storeToRefs(useAuthStore())
+const { errorStatusReg } = storeToRefs(useAuthStore())
 
 const yupValidationSchema = yup.object({
   fio: yup
@@ -33,26 +34,52 @@ const [ email, emailAttrs ] = defineField('email')
 const [ password, passwordAttrs ] = defineField('password')
 
 const submit = handleSubmit((values) => {
-  register(values.fio, values.email, values.password)
+  register(values.fio, values.email, values.password).then(() => router.push('/'))
 })
 
-
+const router = useRouter()
 
 </script>
 
 <template>
   <p class="register-text">Регистрация</p>
-  <form class="register container" method="post" @submit.prevent="submit">
-    <input type="text" placeholder="Иванов Иван Иванович" class="register-fio" v-model="fio" v-bind="fioAttrs" required>
-    <input type="email" placeholder="email" class="register-email" v-model="email" v-bind="emailAttrs" required>
-    <p v-if="errors.email">{{ errors.email }}</p>
+  <form
+      class="register container"
+      @submit.prevent="submit"
+  >
+    <input
+        type="text"
+        placeholder="Иванов Иван Иванович"
+        class="register-fio"
+        v-model="fio"
+        v-bind="fioAttrs"
+        required
+    >
+    <input
+        type="email"
+        placeholder="email"
+        class="register-email"
+        :class="{ red: errors.email }"
+        v-model="email"
+        v-bind="emailAttrs"
+        required
+    >
+    <p class="errors" v-if="errors.email">{{ errors.email }}</p>
     <br>
-    <input type="password" placeholder="пароль" class="register-pass" v-model="password" v-bind="passwordAttrs" required>
-    <p v-if="errors.password">{{ errors.password }}</p>
+    <input
+        type="password"
+        placeholder="пароль"
+        class="register-pass"
+        :class="{ red: errors.password }"
+        v-model="password"
+        v-bind="passwordAttrs"
+        required
+    >
+    <p class="errors" v-if="errors.password">{{ errors.password }}</p>
     <br>
     <button class="register-btn" :disabled="errors.email || errors.password">Зарегистрироваться</button>
     <br>
-    <p v-if="errorStatus">Пользователь с такими данными уже существует</p>
+    <p class="errors" v-if="errorStatusReg">Пользователь с такими данными уже существует</p>
   </form>
 </template>
 
@@ -100,5 +127,12 @@ const submit = handleSubmit((values) => {
     color: #554143;
     background: #ffffff;
   }
+  .red{
+    border: 2px solid red;
+  }
+  .errors{
+    font-size: 18px;
+  }
+
 }
 </style>

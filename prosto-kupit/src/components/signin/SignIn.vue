@@ -3,9 +3,11 @@ import { useForm } from "vee-validate";
 import * as yup from 'yup'
 import {useAuthStore} from "@/stores/auth-store.js";
 import {storeToRefs} from "pinia";
+import {useRouter} from "vue-router";
 
 const { login } = useAuthStore()
-const { errorStatus } = storeToRefs(useAuthStore())
+const { errorStatusLog } = storeToRefs(useAuthStore())
+const router = useRouter()
 
 const yupValidationSchema = yup.object({
   email: yup
@@ -26,7 +28,7 @@ const [ email, emailAttrs ] = defineField('email')
 const [ password, passwordAttrs ] = defineField('password')
 
 const submit = handleSubmit((values) => {
-  login(values.email, values.password)
+  login(values.email, values.password).then(() => router.push('/'))
 })
 </script>
 
@@ -41,7 +43,7 @@ const submit = handleSubmit((values) => {
     <br>
     <button class="register-btn" :disabled="errors.email || errors.password">Войти</button>
     <br>
-    <p v-if="errorStatus">Неверный логин или пароль</p>
+    <p v-if="errorStatusLog">Неверный логин или пароль</p>
   </form>
 </template>
 

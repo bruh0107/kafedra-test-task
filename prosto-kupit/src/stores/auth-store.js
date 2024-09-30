@@ -4,7 +4,8 @@ import axios from "axios";
 
 export const useAuthStore = defineStore('auth-store', () => {
     const authToken = ref(localStorage.getItem('user-token'))
-    const errorStatus = ref(null)
+    const errorStatusReg = ref(null)
+    const errorStatusLog = ref(null)
     const isAuth = computed(() => {
         return authToken.value
     })
@@ -14,18 +15,21 @@ export const useAuthStore = defineStore('auth-store', () => {
         localStorage.setItem('user-token', token)
     }
 
-    const login = (email, password) => {
-        axios
+    const login = async (email, password) => {
+        return axios
             .post(
                 import.meta.env.VITE_API_URL + 'login',
                 { email: email, password: password }
                 )
             .then((res) => setToken(res.data.data.user_token))
-            .catch((error) => errorStatus.value = error.status)
+            .catch((error) => {
+                errorStatusLog.value = error.status
+                throw new Error("Ошибка")
+            })
     }
 
-    const register = (fio, email, password) => {
-        axios
+    const register = async (fio, email, password) => {
+        return axios
             .post(
                 import.meta.env.VITE_API_URL + 'signup',
                 { fio: fio, email: email, password: password }
@@ -34,7 +38,10 @@ export const useAuthStore = defineStore('auth-store', () => {
                 setToken(res.data.data.user_token)
                 console.log(res)
             })
-            .catch(error => errorStatus.value = error.status)
+            .catch(error => {
+                errorStatusReg.value = error.status
+                throw new Error("Ошибка")
+            })
     }
 
     const logout = () => {
@@ -42,5 +49,5 @@ export const useAuthStore = defineStore('auth-store', () => {
         localStorage.removeItem('user-token')
     }
 
-    return { authToken, isAuth, setToken, logout, login, register, errorStatus }
+    return { authToken, isAuth, setToken, logout, login, register, errorStatusReg, errorStatusLog }
 })
