@@ -13,7 +13,7 @@ import { HeaderNavigation } from "@/components/index.js";
 
 <style scoped lang="scss">
 .header{
-  background: #487147FF;
+  background: var(--bg-green);
   position: sticky;
   top: 0;
   z-index: 10;

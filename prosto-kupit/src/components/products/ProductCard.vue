@@ -38,7 +38,7 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
 </script>
 
 <template>
-  <article class="product-card container" :style="{ backgroundImage: `url(${imageFullPath})` }">
+  <article class="product-card" :style="{ backgroundImage: `url(${imageFullPath})` }">
     <div class="product-card-inner">
       <p class="product-card-title">{{ name }}</p>
       <p class="product-card-body">{{ description }}</p>
@@ -51,21 +51,32 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
 </template>
 
 <style scoped lang="scss">
+
 .product-card{
   height: 344px;
   width: 400px;
   display: flex;
-  flex-wrap: wrap;
   align-items: end;
   border-radius: 10px;
   background-position: 50% 50%;
   background-size: cover;
+  box-shadow: 0 0 15px var(--shadow);
+  overflow: hidden;
+  position: relative;
+
+  &:hover .product-card-inner{
+    transform: translateY(0%);
+  }
 
   &-inner{
     background: rgb(72, 113, 71, 0.7);
-    width: 400px;
+    width: 100%;
     border-radius: 10px;
     backdrop-filter: blur(3px);
+    position: absolute;
+    bottom: 0;
+    transform: translateY(40%);
+    transition: 0.3s all;
   }
 
   &-title, &-body{
@@ -94,20 +105,16 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
   &-btn{
     border: none;
     padding: 7px 33px;
-    background: #F5EDD8;
-    color: #3D2B2D;
+    background: var(--white);
+    color: var(--dark-color);
     font-family: 'Comfortaa', sans-serif;
     border-radius: 5px;
     transition: 0.3s;
   }
 
   &-btn:hover{
-    color: #554143;
-    background: #f4efe0;
-  }
-  &-btn:active{
-    color: #685a5b;
-    background: #f8f6f0;
+    color: var(--dark-color-hover);
+    background: var(--bg-hover);
   }
 
   &-price{

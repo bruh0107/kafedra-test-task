@@ -14,8 +14,8 @@ a {
 }
 
 body{
-    background: #fdfbef;
+    background: var(--white);
     letter-spacing: -1px;
-    color: #ffffff;
+    color: #fff;
     font-family: 'Comfortaa', sans-serif;
 }

@@ -14,7 +14,7 @@ const { logout } = useAuthStore()
       <router-link class="navigation-link" to="/signin">Войти</router-link>
     </template>
     <template v-else>
-      <router-link to="#" class="navigation-link">Корзина</router-link>
+      <router-link to="/basket" class="navigation-link">Корзина</router-link>
       <router-link to="#" class="navigation-link">Оформленные заказы</router-link>
       <router-link to="/" class="navigation-link" @click="logout">Выйти</router-link>
     </template>

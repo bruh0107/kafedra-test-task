@@ -52,9 +52,10 @@ const submit = handleSubmit((values) => {
   font-size: 48px;
   padding: 47px 0;
   text-align: center;
+  color: var(--dark-color);
 }
 .register{
-  background: #F5EDD8;
+  background: var(--bg-green);
   width: 860px;
   height: 500px;
   display: flex;
@@ -65,7 +66,7 @@ const submit = handleSubmit((values) => {
 
   &-email, &-pass {
     border: none;
-    background: #FFFCF4;
+    background: var(--white);
     width: 680px;
     padding: 20px 0 20px 15px;
     margin-bottom: 45px;
@@ -78,19 +79,15 @@ const submit = handleSubmit((values) => {
     font-family: 'Comfortaa', sans-serif;
     border: none;
     padding: 18px 25px;
-    background: #FFFCF4;
+    background: var(--white);
     border-radius: 10px;
-    color: #3D2B2D;
+    color: var(--dark-color);
     cursor: pointer;
   }
 
   &-btn:hover{
-    color: #554143;
-    background: #fffef9;
-  }
-  &-btn:active{
-    color: #554143;
-    background: #ffffff;
+    color: var(--dark-color-hover);
+    background: var(--white);
   }
 }
 </style>

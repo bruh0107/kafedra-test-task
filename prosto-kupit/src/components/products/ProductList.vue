@@ -15,7 +15,7 @@ onMounted(() => {
 
 <template>
   <h1 class="title container">Каталог товаров</h1>
-  <section class="product-card container">
+  <section class="product-list container">
     <product-card
         v-for="product in products"
         :key="product.id"
@@ -34,14 +34,15 @@ onMounted(() => {
   font-weight: 400;
   font-size: 48px;
   padding: 48px 0;
-  color: #000000;
+  color: var(--dark-color);
 }
 .loading{
   text-align: center;
   font-size: 48px;
   margin-top: 50px;
+  color: var(--dark-color);
 }
-.product-card{
+.product-list{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
