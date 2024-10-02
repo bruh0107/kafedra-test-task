@@ -62,7 +62,7 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
   background-size: cover;
 
   &-inner{
-    background: rgba(233, 214, 170, 0.8);
+    background: rgb(72, 113, 71, 0.7);
     width: 400px;
     border-radius: 10px;
     backdrop-filter: blur(3px);

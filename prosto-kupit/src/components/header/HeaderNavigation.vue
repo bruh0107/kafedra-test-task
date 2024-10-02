@@ -33,10 +33,10 @@ const { logout } = useAuthStore()
     transition: 0.4s;
   }
   &-link:hover{
-    color: #554143;
+    color: #f5f5f5;
   }
   &-link:active{
-    color: #685a5b;
+    color: #ffffff;
   }
 }
 </style>

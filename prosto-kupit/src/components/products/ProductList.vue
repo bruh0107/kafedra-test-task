@@ -34,6 +34,7 @@ onMounted(() => {
   font-weight: 400;
   font-size: 48px;
   padding: 48px 0;
+  color: #000000;
 }
 .loading{
   text-align: center;

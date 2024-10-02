@@ -13,7 +13,7 @@ import { HeaderNavigation } from "@/components/index.js";
 
 <style scoped lang="scss">
 .header{
-  background: #F5EDD8;
+  background: #487147FF;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -30,7 +30,7 @@ import { HeaderNavigation } from "@/components/index.js";
     align-items: center;
 
     &-text{
-      color: #3D2B2D;
+      color: #faf9f5;
       font-family: 'Comfortaa', sans-serif;
       font-weight: bold;
       line-height: 150%;
