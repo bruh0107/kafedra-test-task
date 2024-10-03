@@ -7,6 +7,7 @@ import {storeToRefs} from "pinia";
 
 const { authToken } = storeToRefs(useAuthStore())
 const basketCards = ref()
+const loading = ref(true)
 onMounted(() => {
   axios
       .get(
@@ -14,6 +15,7 @@ onMounted(() => {
           { headers: { 'Authorization': `Bearer ${authToken.value}`} }
       )
       .then((data) => basketCards.value = data.data.data)
+      .finally(() => loading.value = false)
 })
 </script>
 
@@ -29,7 +31,8 @@ onMounted(() => {
         :image="card.image"
         :price="+card.price"
     />
-    <h1 v-if="!basketCards" class="loading">Загрузка...</h1>
+    <h1 v-if="loading" class="loading">Загрузка...</h1>
+    <p v-if="!basketCards?.length && !loading" class="loading">Корзина пуста</p>
   </section>
 </template>
 
