@@ -1,9 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router";
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import {storeToRefs} from "pinia";
 import {useAuthStore} from "@/stores/auth-store.js";
-const { isAuth } = storeToRefs(useAuthStore())
+import axios from "axios";
+const { isAuth, authToken } = storeToRefs(useAuthStore())
 
 const props = defineProps({
   id: {
@@ -24,16 +25,22 @@ const props = defineProps({
   },
   price: {
     type: Number
-  },
-  showBtn: {
-    type: Boolean,
-    default: false
   }
 })
 
 const router = useRouter()
 
 const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
+
+const addToCard = () => {
+  axios
+      .post(
+          'http://lifestealer86.ru/api-shop/cart/' + props.id,
+          null,
+          { headers: {'Authorization': `Bearer ${authToken.value}`} }
+      )
+      .then((data) => console.log(data.data.data))
+}
 
 </script>
 
@@ -44,7 +51,7 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
       <p class="product-card-body">{{ description }}</p>
       <div class="product-card-info">
         <span class="product-card-price">{{ price }} р.</span>
-        <button class="product-card-btn" v-if="isAuth">В корзину</button>
+        <button class="product-card-btn" v-if="isAuth" @click="addToCard">В корзину</button>
       </div>
     </div>
   </article>
@@ -53,19 +60,19 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
 <style scoped lang="scss">
 
 .product-card{
-  height: 344px;
-  width: 400px;
+  min-height: 344px;
+  width: auto;
   display: flex;
   align-items: end;
   border-radius: 10px;
   background-position: 50% 50%;
   background-size: cover;
   box-shadow: 0 0 15px var(--shadow);
-  overflow: hidden;
+  overflow-y: hidden;
   position: relative;
 
   &:hover .product-card-inner{
-    transform: translateY(0%);
+    bottom: 0;
   }
 
   &-inner{
@@ -74,9 +81,8 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
     border-radius: 10px;
     backdrop-filter: blur(3px);
     position: absolute;
-    bottom: 0;
-    transform: translateY(40%);
-    transition: 0.3s all;
+    bottom: -43px;
+    transition: bottom 0.3s;
   }
 
   &-title, &-body{
@@ -109,7 +115,8 @@ const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
     color: var(--dark-color);
     font-family: 'Comfortaa', sans-serif;
     border-radius: 5px;
-    transition: 0.3s;
+    transition: 0.2s;
+    cursor: pointer;
   }
 
   &-btn:hover{

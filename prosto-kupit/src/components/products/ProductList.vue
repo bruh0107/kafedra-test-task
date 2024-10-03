@@ -25,8 +25,8 @@ onMounted(() => {
         :image="product.image"
         :price="+product.price"
     />
-    <h1 v-if="!products" class="loading">Загрузка...</h1>
   </section>
+  <h1 v-if="!products" class="loading">Загрузка...</h1>
 </template>
 
 <style scoped lang="scss">
@@ -46,5 +46,14 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 890px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 600px){
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 </style>
