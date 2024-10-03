@@ -1,5 +1,5 @@
 <script setup>
-import SignIn from "@/components/signin/SignIn.vue";
+import {SignIn} from "@/components/index.js";
 </script>
 
 <template>
