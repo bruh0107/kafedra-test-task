@@ -1,5 +1,5 @@
 <script setup>
-import {  }
+import { OrderCard } from "@/components/index.js";
 </script>
 
 <template>

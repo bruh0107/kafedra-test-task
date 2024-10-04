@@ -1,6 +1,6 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth-store.js";
-import { BasketCard } from "@/components/index.js";
+import BasketCard from './BasketCard.vue'
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {storeToRefs} from "pinia";
@@ -8,7 +8,8 @@ import {storeToRefs} from "pinia";
 const { authToken } = storeToRefs(useAuthStore())
 const basketCards = ref()
 const loading = ref(true)
-onMounted(() => {
+
+const getCart = () => {
   axios
       .get(
           'http://lifestealer86.ru/api-shop/cart',
@@ -16,6 +17,10 @@ onMounted(() => {
       )
       .then((data) => basketCards.value = data.data.data)
       .finally(() => loading.value = false)
+}
+
+onMounted(() => {
+  getCart()
 })
 </script>
 
@@ -25,11 +30,13 @@ onMounted(() => {
     <basket-card
         v-for="card in basketCards"
         :key="card.id"
+        :product_id="+card.product_id"
         :id="card.id"
         :name="card.name"
         :description="card.description"
         :image="card.image"
         :price="+card.price"
+        @response="getCart"
     />
     <h1 v-if="loading" class="loading">Загрузка...</h1>
     <p v-if="!basketCards?.length && !loading" class="loading">Корзина пуста</p>

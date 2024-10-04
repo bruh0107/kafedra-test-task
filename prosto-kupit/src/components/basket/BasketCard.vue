@@ -2,9 +2,18 @@
 import { useRouter } from "vue-router";
 import {computed, ref} from "vue";
 import callbase from '@/assets/img/callbase.jpg'
+import axios from "axios";
+import {storeToRefs} from "pinia";
+import {useAuthStore} from "@/stores/auth-store.js";
+
+const { authToken } = storeToRefs(useAuthStore())
 
 const props = defineProps({
   id: {
+    type: Number,
+    required: false
+  },
+  product_id: {
     type: Number,
     required: true
   },
@@ -29,6 +38,17 @@ const router = useRouter()
 
 const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
 const counter = ref(0)
+const emit = defineEmits(['response'])
+
+const deleteOrder = () => {
+  axios
+      .delete(
+          'http://lifestealer86.ru/api-shop/cart/' + props.id,
+          { headers: { 'Authorization': `Bearer ${authToken.value}`} }
+      )
+      .then(() => emit('response'))
+}
+
 </script>
 
 <template>
@@ -51,7 +71,7 @@ const counter = ref(0)
           <span class="basket-card-price">{{ price }} р.</span>
           <button class="basket-card-btn">Оформить</button>
         </div>
-        <img src="@/assets/img/trash_icon.svg" alt="Мусорка">
+        <img class="deleteOrder" src="@/assets/img/trash_icon.svg" alt="Мусорка" @click="deleteOrder">
       </div>
     </div>
   </article>
@@ -159,8 +179,9 @@ const counter = ref(0)
     background: var(--bg-hover);
   }
 
-
-
+  .deleteOrder{
+    cursor: pointer;
+  }
 
 }
 </style>
