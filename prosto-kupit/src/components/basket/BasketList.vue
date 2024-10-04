@@ -34,9 +34,19 @@ onMounted(() => {
     <h1 v-if="loading" class="loading">Загрузка...</h1>
     <p v-if="!basketCards?.length && !loading" class="loading">Корзина пуста</p>
   </section>
+<!--  <div class="order-menu">-->
+<!--  </div>-->
 </template>
 
 <style scoped lang="scss">
+//.order-menu{
+//  width: 430px;
+//  height: 300px;
+//  position: fixed;
+//  bottom: 0;
+//  right: 130px;
+//  background: var(--dark-color);
+//}
 .title{
   font-weight: 400;
   font-size: 48px;

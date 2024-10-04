@@ -32,7 +32,7 @@ const router = useRouter()
 
 const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
 
-const addToCard = () => {
+const addToCart = () => {
   axios
       .post(
           'http://lifestealer86.ru/api-shop/cart/' + props.id,
@@ -51,7 +51,7 @@ const addToCard = () => {
       <p class="product-card-body">{{ description }}</p>
       <div class="product-card-info">
         <span class="product-card-price">{{ price }} р.</span>
-        <button class="product-card-btn" v-if="isAuth" @click="addToCard">В корзину</button>
+        <button class="product-card-btn" v-if="isAuth" @click="addToCart">В корзину</button>
       </div>
     </div>
   </article>

@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import {computed, ref} from "vue";
-import colbasa from '@/assets/img/callbase.jpg'
+import callbase from '@/assets/img/callbase.jpg'
 
 const props = defineProps({
   id: {
@@ -35,7 +35,7 @@ const counter = ref(0)
   <article class="basket-card">
     <div class="basket-card-inner">
       <div class="basket-card-left">
-        <img class="basket-card-img" :src="image ? imageFullPath : colbasa" alt="Продукт">
+        <img class="basket-card-img" :src="image ? imageFullPath : callbase" alt="Продукт">
         <div class="basket-card-info">
           <p class="basket-card-title">{{ name }}</p>
           <p class="basket-card-body">{{ description }}</p>
@@ -51,6 +51,7 @@ const counter = ref(0)
           <span class="basket-card-price">{{ price }} р.</span>
           <button class="basket-card-btn">Оформить</button>
         </div>
+        <img src="@/assets/img/trash_icon.svg" alt="Мусорка">
       </div>
     </div>
   </article>
@@ -140,7 +141,7 @@ const counter = ref(0)
   }
 
   &-price{
-    font-size: 26px;
+    font-size: 28px;
   }
   &-btn{
     padding: 14px 60px;
