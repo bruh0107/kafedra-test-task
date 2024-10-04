@@ -1,13 +1,23 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth-store.js";
 import BasketCard from './BasketCard.vue'
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import axios from "axios";
 import {storeToRefs} from "pinia";
 
 const { authToken } = storeToRefs(useAuthStore())
-const basketCards = ref()
+const basketCards = ref([])
 const loading = ref(true)
+
+const groupCart = computed(() => {
+  return basketCards.value.reduce((groups, item) => {
+    if (!groups[item.product_id]) {
+      groups[item.product_id] = []
+    }
+    groups[item.product_id].push(item)
+    return groups
+  }, {})
+})
 
 const getCart = () => {
   axios
@@ -28,14 +38,15 @@ onMounted(() => {
   <h2 class="title container">Корзина</h2>
   <section class="basket-list container">
     <basket-card
-        v-for="card in basketCards"
-        :key="card.id"
-        :product_id="+card.product_id"
-        :id="card.id"
-        :name="card.name"
-        :description="card.description"
-        :image="card.image"
-        :price="+card.price"
+        v-for="(value, id) in groupCart"
+        :key="value[0].id"
+        :product_id="+value[0].product_id"
+        :id="value[0].id"
+        :name="value[0].name"
+        :description="value[0].description"
+        :image="value[0].image"
+        :price="+value[0].price"
+        :count="value.length"
         @response="getCart"
     />
     <h1 v-if="loading" class="loading">Загрузка...</h1>

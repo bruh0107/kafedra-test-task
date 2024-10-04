@@ -6,6 +6,8 @@ import {useAuthStore} from "@/stores/auth-store.js";
 
 const { authToken } = storeToRefs(useAuthStore())
 
+
+
 const doAnOrder = () => {
   axios
       .post(
@@ -18,7 +20,11 @@ const doAnOrder = () => {
 </script>
 
 <template>
+  <article class="order-card">
+    <div class="order-card-inner">
 
+    </div>
+  </article>
 </template>
 
 <style scoped lang="scss">

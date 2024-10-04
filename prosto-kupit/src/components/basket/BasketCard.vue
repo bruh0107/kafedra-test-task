@@ -11,7 +11,7 @@ const { authToken } = storeToRefs(useAuthStore())
 const props = defineProps({
   id: {
     type: Number,
-    required: false
+    required: true
   },
   product_id: {
     type: Number,
@@ -31,14 +31,26 @@ const props = defineProps({
   },
   price: {
     type: Number,
+  },
+  count: {
+    type: Number
   }
 })
 
 const router = useRouter()
 
 const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
-const counter = ref(0)
+const counter = ref(props.count)
 const emit = defineEmits(['response'])
+
+const increaseQuantity = () => {
+  counter.value++
+}
+const decreaseQuantity = () => {
+    if (counter.value > 1) {
+      counter.value--
+  }
+}
 
 const deleteOrder = () => {
   axios
@@ -63,9 +75,9 @@ const deleteOrder = () => {
       </div>
       <div class="basket-card-right">
         <div>
-          <button @click="counter--">-</button>
+          <button @click="decreaseQuantity">-</button>
           <span>{{ counter }}</span>
-          <button @click="counter++">+</button>
+          <button @click="increaseQuantity">+</button>
         </div>
         <div>
           <span class="basket-card-price">{{ price }} р.</span>
