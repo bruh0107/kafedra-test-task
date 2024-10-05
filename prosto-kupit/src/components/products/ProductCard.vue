@@ -3,8 +3,10 @@ import { useRouter } from "vue-router";
 import {computed} from "vue";
 import {storeToRefs} from "pinia";
 import {useAuthStore} from "@/stores/auth-store.js";
+import "vue3-toastify/dist/index.css";
 import axios from "axios";
 const { isAuth, authToken } = storeToRefs(useAuthStore())
+import { toast } from "vue3-toastify";
 
 const props = defineProps({
   id: {
@@ -39,7 +41,15 @@ const addToCart = () => {
           null,
           { headers: {'Authorization': `Bearer ${authToken.value}`} }
       )
-      .then((data) => console.log(data.data.data))
+      .then((data) => {
+        console.log(data.data.data)
+        toast("Товар в корзине!", {
+          "type": "success",
+          "transition": "slide",
+          "autoClose": 1500,
+          "dangerouslyHTMLString": true
+        })
+      })
 }
 
 </script>

@@ -6,18 +6,32 @@ import axios from "axios";
 import {storeToRefs} from "pinia";
 
 const { authToken } = storeToRefs(useAuthStore())
+
 const basketCards = ref([])
 const loading = ref(true)
+const products = ref([])
 
 const groupCart = computed(() => {
   return basketCards.value.reduce((groups, item) => {
     if (!groups[item.product_id]) {
       groups[item.product_id] = []
     }
+
+    const currentProduct = products.value.find(product => product.id === item.product_id)
+
+    item.image = currentProduct?.image
     groups[item.product_id].push(item)
     return groups
   }, {})
 })
+
+const getProducts = () => {
+  axios
+      .get(
+          'http://lifestealer86.ru/api-shop/products',
+      )
+      .then((data) => products.value = data.data.data)
+}
 
 const getCart = () => {
   axios
@@ -31,6 +45,7 @@ const getCart = () => {
 
 onMounted(() => {
   getCart()
+  getProducts()
 })
 </script>
 

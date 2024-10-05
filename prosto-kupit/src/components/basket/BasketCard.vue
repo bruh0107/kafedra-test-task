@@ -119,6 +119,8 @@ const deleteOrder = () => {
     width: 120px;
     height: 120px;
     border-radius: 5px;
+    object-fit: cover;
+    background: var(--white);
   }
   &-body{
     font-size: 18px;
