@@ -33,13 +33,14 @@ const fullPrice = computed(() => {
   return basketCards.value.reduce((acc, order) => acc + order.price, 0)
 })
 
-const addProduct = (id) => {
+const addProduct = (product_id) => {
   axios
       .post(
-          'http://lifestealer86.ru/api-shop/cart/' + id,
+          'http://lifestealer86.ru/api-shop/cart/' + product_id,
           null,
           { headers: {'Authorization': `Bearer ${authToken.value}`} }
       )
+      .then(() => getCart())
 }
 
 const getProducts = () => {
@@ -87,6 +88,33 @@ const deleteGroup = (id) => {
   })
 }
 
+const placeAnOrder = () => {
+  axios
+      .post(
+          'http://lifestealer86.ru/api-shop/order',
+          null,
+          { headers: { 'Authorization': `Bearer ${authToken.value}`} }
+      )
+      .then((data) => {
+        console.log(data)
+        getCart()
+        toast("Заказ оформлен!", {
+          "type": "success",
+          "autoClose": 1500,
+          "transition": "slide",
+          "dangerouslyHTMLString": true
+        })
+      })
+      .catch(() => {
+        toast("Корзина пустая!", {
+          "type": "error",
+          "autoClose": 1500,
+          "transition": "slide",
+          "dangerouslyHTMLString": true
+        })
+      })
+}
+
 onMounted(() => {
   getCart()
   getProducts()
@@ -121,7 +149,7 @@ onMounted(() => {
     </div>
     <div class="order-info" v-if="isOpenModal">
       <span>Итог: {{ fullPrice }} p.</span>
-      <button class="order-btn">Оформить</button>
+      <button class="order-btn" @click="placeAnOrder">Оформить</button>
     </div>
   </div>
 </template>
