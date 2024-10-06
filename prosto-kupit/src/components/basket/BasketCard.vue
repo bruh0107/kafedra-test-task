@@ -2,12 +2,10 @@
 import { useRouter } from "vue-router";
 import {computed, ref} from "vue";
 import callbase from '@/assets/img/callbase.jpg'
-import axios from "axios";
 import {storeToRefs} from "pinia";
 import {useAuthStore} from "@/stores/auth-store.js";
 
-const { authToken } = storeToRefs(useAuthStore())
-
+const emit = defineEmits(['response', 'deleteProduct', 'deleteGroup', 'addProduct'])
 const props = defineProps({
   id: {
     type: Number,
@@ -36,29 +34,21 @@ const props = defineProps({
     type: Number
   }
 })
-
+const { authToken } = storeToRefs(useAuthStore())
 const router = useRouter()
-
-const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
 const counter = ref(props.count)
-const emit = defineEmits(['response'])
+const imageFullPath = computed(() => 'http://lifestealer86.ru/' + props.image)
 
 const increaseQuantity = () => {
   counter.value++
+  emit('addProduct', props.product_id)
+
 }
 const decreaseQuantity = () => {
-    if (counter.value > 1) {
-      counter.value--
+  if (counter.value > 1) {
+    counter.value--
+    emit("deleteProduct", props.product_id)
   }
-}
-
-const deleteOrder = () => {
-  axios
-      .delete(
-          'http://lifestealer86.ru/api-shop/cart/' + props.id,
-          { headers: { 'Authorization': `Bearer ${authToken.value}`} }
-      )
-      .then(() => emit('response'))
 }
 
 </script>
@@ -81,9 +71,8 @@ const deleteOrder = () => {
         </div>
         <div>
           <span class="basket-card-price">{{ price }} р.</span>
-          <button class="basket-card-btn">Оформить</button>
         </div>
-        <img class="deleteOrder" src="@/assets/img/trash_icon.svg" alt="Мусорка" @click="deleteOrder">
+        <img class="deleteOrder" src="@/assets/img/trash_icon.svg" alt="Мусорка" @click="emit('deleteGroup', product_id)">
       </div>
     </div>
   </article>
@@ -176,21 +165,6 @@ const deleteOrder = () => {
 
   &-price{
     font-size: 28px;
-  }
-  &-btn{
-    padding: 14px 60px;
-    border: none;
-    background: var(--white);
-    cursor: pointer;
-    font-family: 'Comfortaa', sans-serif;
-    font-size: 18px;
-    color: var(--dark-color);
-    transition: 0.2s;
-    border-radius: 7px;
-  }
-  &-btn:hover{
-    color: var(--dark-color-hover);
-    background: var(--bg-hover);
   }
 
   .deleteOrder{
