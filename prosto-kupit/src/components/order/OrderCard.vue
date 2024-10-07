@@ -1,28 +1,41 @@
 <script setup>
 import { useRouter } from "vue-router";
 import axios from "axios";
-import {storeToRefs} from "pinia";
-import {useAuthStore} from "@/stores/auth-store.js";
 
-const { authToken } = storeToRefs(useAuthStore())
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true
+  },
+  products: {
+    type: Array,
+    required: true
+  },
+  order_price: {
+    type: Number,
+  }
+})
 
+const router = useRouter()
 
-
-const doAnOrder = () => {
-  axios
-      .post(
-          'http://lifestealer86.ru/api-shop/order',
-          null,
-          { headers: {'Authorization': `Bearer ${authToken.value}`} }
-      )
-      .then((data) => console.log(data.data.data))
-}
 </script>
 
 <template>
   <article class="order-card">
     <div class="order-card-inner">
-
+      <div
+          class="order-card-info"
+           v-for="value in products"
+           :key="value?.id"
+      >
+        <p class="order-card-title">
+          {{ value?.name }}
+        </p>
+        <p class="order-card-count">{{  }}</p>
+      </div>
+      <div>
+          <span class="order-card-price">{{ price }} р.</span>
+      </div>
     </div>
   </article>
 </template>

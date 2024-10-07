@@ -32,7 +32,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .title{
   font-weight: 400;
-  font-size: 48px;
+  font-size: 42px;
   padding: 48px 0;
   color: var(--dark-color);
 }
