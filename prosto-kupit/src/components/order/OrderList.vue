@@ -28,6 +28,7 @@ onMounted(() => {
           { headers: {'Authorization': `Bearer ${authToken.value}`} }
       )
       .then((response) => orders.value = response.data.data)
+      .finally(() => loading.value = false)
   axios
         .get(
             'http://lifestealer86.ru/api-shop/products'
@@ -46,11 +47,16 @@ onMounted(() => {
         :products="value.products"
         :order_price="+value.order_price"
     />
-    <h1 v-if="loading" class="loading">Загрузка...</h1>
   </section>
+  <h1 v-if="loading" class="loading">Загрузка...</h1>
 </template>
 
 <style scoped lang="scss">
+.order-list{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
 .order-title{
   font-weight: 400;
   font-size: 42px;
