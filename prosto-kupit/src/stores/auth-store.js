@@ -45,6 +45,11 @@ export const useAuthStore = defineStore('auth-store', () => {
     }
 
     const logout = () => {
+        axios
+            .get(
+                import.meta.env.VITE_API_URL + 'logout',
+                { headers: { 'Authorization': `Bearer ${authToken.value}`} }
+            )
         authToken.value = null
         localStorage.removeItem('user-token')
     }

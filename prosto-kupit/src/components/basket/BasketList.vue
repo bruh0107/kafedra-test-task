@@ -6,8 +6,10 @@ import {computed, onMounted, ref} from "vue";
 import axios from "axios";
 import {storeToRefs} from "pinia";
 import { toast } from "vue3-toastify";
+import {useRouter} from "vue-router";
 
 const { authToken } = storeToRefs(useAuthStore())
+const router = useRouter()
 
 const basketCards = ref([])
 const loading = ref(true)
@@ -104,6 +106,7 @@ const placeAnOrder = () => {
           "transition": "slide",
           "dangerouslyHTMLString": true
         })
+        router.push('/order')
       })
       .catch(() => {
         toast("Корзина пустая!", {

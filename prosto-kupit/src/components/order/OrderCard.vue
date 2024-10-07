@@ -1,6 +1,5 @@
 <script setup>
 import { useRouter } from "vue-router";
-import axios from "axios";
 
 const props = defineProps({
   id: {
