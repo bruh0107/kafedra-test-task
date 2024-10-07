@@ -42,7 +42,6 @@ const addToCart = () => {
           { headers: {'Authorization': `Bearer ${authToken.value}`} }
       )
       .then((data) => {
-        console.log(data.data.data)
         toast("Товар в корзине!", {
           "type": "success",
           "transition": "slide",

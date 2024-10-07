@@ -26,7 +26,6 @@ const groupCart = computed(() => {
 
     item.image = currentProduct?.image
     groups[item.product_id].push(item)
-    console.log(groups)
     return groups
   }, {})
 })
@@ -98,7 +97,6 @@ const placeAnOrder = () => {
           { headers: { 'Authorization': `Bearer ${authToken.value}`} }
       )
       .then((data) => {
-        console.log(data)
         getCart()
         toast("Заказ оформлен!", {
           "type": "success",

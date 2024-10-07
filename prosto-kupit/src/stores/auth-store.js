@@ -36,7 +36,6 @@ export const useAuthStore = defineStore('auth-store', () => {
             )
             .then((res) => {
                 setToken(res.data.data.user_token)
-                console.log(res)
             })
             .catch(error => {
                 errorStatusReg.value = error.status
