@@ -2,8 +2,8 @@
 import {useAuthStore} from "@/stores/auth-store.js";
 import {storeToRefs} from "pinia";
 
-const { isAuth } = storeToRefs(useAuthStore())
 const { logout } = useAuthStore()
+const { isAuth } = storeToRefs(useAuthStore())
 
 </script>
 
